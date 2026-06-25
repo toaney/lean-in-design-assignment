@@ -1,0 +1,22 @@
+# Local Environment Configuration Secrets
+.env
+.env.local
+
+# Node / Frontend Dependency Artifacts
+node_modules/
+dist/
+.next/
+
+# Python / Backend System Cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+varkenv/
+
+# OS-Specific Files
+.DS_Store
+Thumbs.db
+
+# Local Database Data Directory (Prevents committing raw binary db files)
+postgres_data/
