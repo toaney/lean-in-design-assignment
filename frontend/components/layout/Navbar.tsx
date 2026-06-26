@@ -30,7 +30,7 @@ function LeanInLogo() {
         d="M11.617 42.628H37.95v10.56H0V.377h11.617zm90.007-31.91H73.329v10.71h24.902v10.337H73.33v11.09h28.672v10.333H61.789V.377h39.835zm77.253 42.47h-12.144l-4.828-11.845h-22.331l-4.828 11.844h-11.845L145.532 0h10.709zm58.696-20.293V.377h11.473v52.81h-9.883L213.585 19.62v33.567h-11.469V.377h10.709zm88.953 20.292h-11.612V.377h11.612zm63.896-20.291V.377h11.468v52.81h-9.877L366.438 19.62v33.567h-11.467V.377h10.704zM143.72 31.088h14.034l-7.017-17.126z"
         fill="currentColor"
       />
-      <path d="M401.89 76.422h-86.976V80h86.976z" fill="#b21f24" />
+      <path d="M401.89 76.422h-86.976V80h86.976z" fill="#C44536" />
     </svg>
   )
 }
@@ -128,13 +128,13 @@ export default function Navbar() {
   return (
     <header
       role="banner"
-      className={`relative sticky top-0 z-50 bg-secondary transition-shadow duration-200 ${
+      className={`relative sticky top-0 z-50 bg-charcoal transition-shadow duration-200 ${
         scrolled ? 'shadow-lg' : ''
       }`}
     >
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 md:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 md:px-8"
       >
         {/* ── Wordmark ── */}
         <Link
@@ -181,7 +181,7 @@ export default function Navbar() {
             <SearchIcon className="h-4 w-4" />
           </button>
 
-          {/* Join Us / Sign Out */}
+          {/* Sign In / Sign Out */}
           <button
             onClick={toggleAuth}
             aria-label={isLoggedIn ? 'Sign out of your account' : 'Join Lean In'}
@@ -191,7 +191,7 @@ export default function Navbar() {
               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white
               md:inline-flex items-center"
           >
-            {isLoggedIn ? 'Sign Out' : 'Join Us'}
+            {isLoggedIn ? 'Sign Out' : 'Sign In'}
           </button>
 
           {/* Hamburger — mobile only */}
@@ -233,7 +233,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="absolute inset-0 z-20 flex items-center bg-secondary px-4 md:px-8"
+            className="absolute inset-0 z-20 flex items-center bg-charcoal px-4 md:px-8"
           >
             <form
               onSubmit={handleSearchSubmit}
@@ -307,14 +307,14 @@ export default function Navbar() {
               </li>
             )
           })}
-          {/* Join Us in mobile */}
+          {/* Sign In in mobile */}
           <li className="pt-4">
             <button
               onClick={() => { toggleAuth(); setMenuOpen(false) }}
               className="w-full rounded-full border border-white/70 py-2 text-sm font-semibold
                 text-white transition-colors hover:bg-white hover:text-secondary"
             >
-              {isLoggedIn ? 'Sign Out' : 'Join Us'}
+              {isLoggedIn ? 'Sign Out' : 'Sign In'}
             </button>
           </li>
         </ul>

@@ -1,4 +1,5 @@
 import { fetchHomeStats, fetchFeaturedArticles } from '@/lib/api'
+import HeroSection from '@/components/home/HeroSection'
 import CirclesHero from '@/components/home/CirclesHero'
 import WomenWorkplaceSection from '@/components/home/WomenWorkplaceSection'
 import ResearchSection from '@/components/home/ResearchSection'
@@ -13,6 +14,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <HeroSection />
       <CirclesHero stats={stats} />
       <WomenWorkplaceSection />
       <ResearchSection articles={featured.articles} />

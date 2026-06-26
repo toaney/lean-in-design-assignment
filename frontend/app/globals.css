@@ -2,22 +2,22 @@
 
 @theme {
   /* ── Brand colors ─────────────────────────────────────────── */
-  --color-primary: #b21f24;       /* lean-in-red    — CTAs, buttons, links     */
-  --color-primary-hover: #780000; /* molten-lava    — hover/active for primary */
-  --color-secondary: #003049;     /* deep-space-blue — header, footer only     */
-  --color-background: #ffffff;    /* white          — main content background  */
-  --color-molten-lava: #780000;
-  --color-teal: #1f7a8c;
-  --color-charcoal: #222222;
+  --color-primary: #C44536;       /* warm red    — CTAs, buttons, logo underline */
+  --color-primary-hover: #772e25; /* dark brick  — hover/active for primary      */
+  --color-secondary: #C44536;     /* warm red     — accents, buttons             */
+  --color-background: #ffffff;    /* white       — page background               */
+  --color-teal: #197278;          /* teal        — captions, labels, links       */
+  --color-brick: #772e25;         /* dark brick  — accents, section headings     */
+  --color-charcoal: #222222;      /* near-black  — body headings                 */
 
-  /* ── Neutrals (cool, clean — no warm undertone) ──────────── */
+  /* ── Neutrals ────────────────────────────────────────────── */
   --color-white: #ffffff;
-  --color-gray-50: #f7f7f7;
-  --color-gray-100: #efefef;
-  --color-gray-200: #e5e5e5;
-  --color-gray-400: #9a9a9a;
-  --color-gray-600: #666666;
-  --color-gray-900: #111111;
+  --color-gray-50: #f2ece7;
+  --color-gray-100: #e8ddd6;
+  --color-gray-200: #ddd0c7;
+  --color-gray-400: #a89890;
+  --color-gray-600: #6b5c54;
+  --color-gray-900: #1a1210;
 
   /* ── Typography ───────────────────────────────────────────── */
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;

@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         hostname: 'leanin.org',
         pathname: '/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'blogs-images.forbes.com',
+      },
     ],
   },
 }

@@ -5,59 +5,34 @@ import Image from 'next/image'
 
 const LIVE = 'https://leanin.org'
 
-const CIRCLE_STEPS = [
-  {
-    image: 'https://leanin.org/media/images/Circles_LP_Step_1.2e16d0ba.fill-500x333.jpg',
-    title: 'Get started online',
-    description: 'Create an account and register your Circle to unlock all resources.',
-  },
-  {
-    image: 'https://leanin.org/media/images/Circles_LP_Step_2.2e16d0ba.fill-500x333.jpg',
-    title: 'Attend Circle Leader Training',
-    description: 'Join complimentary virtual sessions for guidance and practical tools.',
-  },
-  {
-    image: 'https://leanin.org/media/images/Circle_Step_3.2e16d0ba.fill-500x333.jpg',
-    title: 'Invite members',
-    description: 'Use customizable templates to invite women you know and respect.',
-  },
-  {
-    image: 'https://leanin.org/media/images/Circles_LP_Step_4.2e16d0ba.fill-500x333.jpg',
-    title: 'Host your first meeting',
-    description: 'Use our step-by-step agendas and discussion guides to run your first session.',
-  },
-  {
-    image: 'https://leanin.org/media/images/41268458e4e86a84f847ac2204fffa0ca4.2e16d0ba.fill-500x333.jpg',
-    title: 'Build the habit',
-    description: 'Schedule regular monthly meetings and pick discussion topics in advance.',
-  },
-  {
-    image: 'https://leanin.org/media/images/Circles_LP_Step_6.2e16d0ba.fill-500x333.jpg',
-    title: 'Join a Network',
-    description: 'Connect with other Circle Leaders and join local Lean In community events.',
-  },
-]
-
 const TESTIMONIALS = [
   {
     quote:
-      "In the times of AI and rapid transformation, I am convinced that women-led communities are not optional — they are essential infrastructure. They create safer spaces to learn, challenge bias, and enable women to lead authentically.",
+      "In the times of AI and rapid transformation, I am convinced that women-led communities are not optional, they are essential infrastructure.",
+    name: 'Circle member',
     location: 'India',
+    image: 'https://leanin.org/media/images/GettyImages-2212415119.width-500.jpg',
   },
   {
     quote:
-      "My Circle gave me the confidence to negotiate my salaries and promotions, find mentorship and sponsorship. It gave me the tools to navigate a difficult workplace for women.",
+      "My Circle gave me the confidence to negotiate my salaries and promotions, find mentorship and sponsorship.",
+    name: 'Circle member',
     location: 'Netherlands',
+    image: 'https://leanin.org/media/images/GettyImages-1442158565.width-500.jpg',
   },
   {
     quote:
-      "Because of my Circle I found the career change I was looking for, as simple as that. It made me see the opportunities in front of me, finding the courage to dare.",
+      "Because of my Circle I found the career change I was looking for, as simple as that.",
+    name: 'Circle member',
     location: 'Spain',
+    image: 'https://leanin.org/media/images/GettyImages-1889706062.width-500.jpg',
   },
   {
     quote:
-      "My Circle has taught me that success doesn't have to be lonely. That persistence is easier when it's shared. And that community can be the difference between giving up and continuing forward.",
+      "My Circle has taught me that success doesn't have to be lonely. That persistence is easier when it's shared.",
+    name: 'Circle member',
     location: 'Greece',
+    image: 'https://leanin.org/media/images/GettyImages-2228519291.width-500.jpg',
   },
 ]
 
@@ -65,7 +40,7 @@ const FEATURES = [
   {
     title: 'Leadership materials',
     description:
-      'Step-by-step meeting guides and research-backed leadership curriculum.',
+      'Step-by-step meeting guides and our research-backed leadership curriculum.',
   },
   {
     title: 'Exclusive events',
@@ -94,7 +69,7 @@ const FAQS = [
   },
   {
     q: 'How do I start a Lean In Circle?',
-    a: 'Starting a Circle is simple. Gather a small group of women committed to growing together and register your Circle on connect.leanin.org. We provide free meeting guides, leadership tips for Circle leaders, and ongoing support and resources. You don\'t need to be an expert — you just need to be willing to facilitate conversation and create space for others.',
+    a: 'Starting a Circle is simple. Gather a small group of women committed to growing together and register your Circle on connect.leanin.org. We provide free meeting guides, leadership tips for Circle leaders, and ongoing support. You don\'t need to be an expert — you just need to be willing to facilitate conversation and create space for others.',
   },
   {
     q: 'How do Lean In Circles help women advance at work?',
@@ -104,7 +79,114 @@ const FAQS = [
     q: 'Are Lean In Circles only for working women?',
     a: 'Lean In Circles are for women at all stages of life and career — including students, entrepreneurs, women returning to work, and those navigating career transitions. Some Circles are women-only spaces. Others are open to allies. Each Circle sets its own guidelines.',
   },
+  {
+    q: 'How often do Circles meet, and how long are meetings?',
+    a: 'Most Circles meet once a month for about 90 minutes. The frequency and length are up to your group, but regular, consistent meetings are key to building trust and momentum. Many Circles choose a standing date — the first Tuesday of each month, for example — so it becomes a reliable part of members\' schedules.',
+  },
+  {
+    q: 'Do I have to be a leader to join or start a Circle?',
+    a: 'Not at all. Circles are for women who want to grow into leadership — not just those who are already there. There is no experience level required. Circle Leaders are not experts or coaches; they are facilitators who create space for the group. Lean In provides all the materials and training you need.',
+  },
+  {
+    q: 'Is there a cost to join a Lean In Circle?',
+    a: 'Joining or starting a Lean In Circle is completely free. All meeting guides, discussion materials, and Circle Leader training are available at no cost through your registration on connect.leanin.org. Some local Networks may organize events with associated costs, but the core Circle experience is always free.',
+  },
 ]
+
+function TestimonialCarousel() {
+  const [current, setCurrent] = useState(0)
+  const total = TESTIMONIALS.length
+
+  const prev = () => setCurrent(i => (i - 1 + total) % total)
+  const next = () => setCurrent(i => (i + 1) % total)
+
+  return (
+    <div className="relative">
+      {/* Sliding track */}
+      <div className="overflow-hidden rounded-2xl">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {TESTIMONIALS.map(({ quote, name, location, image }) => (
+            <div
+              key={location}
+              className="flex w-full shrink-0 flex-col overflow-hidden md:flex-row"
+            >
+              {/* Image panel */}
+              <div className="relative h-64 w-full md:h-auto md:w-2/5 md:shrink-0">
+                <Image
+                  src={image}
+                  alt={`Circle member from ${location}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Quote panel */}
+              <div className="flex flex-1 flex-col justify-center bg-gray-50 p-10 lg:p-14">
+                <span
+                  className="mb-4 block font-display text-6xl font-black leading-none text-primary/15"
+                  aria-hidden="true"
+                >
+                  &ldquo;
+                </span>
+                <p className="text-xl font-light leading-relaxed text-charcoal lg:text-2xl">
+                  {quote}
+                </p>
+                <div className="mt-8 border-t border-gray-200 pt-6">
+                  <p className="text-sm font-semibold text-charcoal">{name}</p>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-teal">
+                    {location}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Prev / Next arrows */}
+      <button
+        onClick={prev}
+        aria-label="Previous testimonial"
+        className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center
+          justify-center rounded-full bg-white shadow-md text-charcoal
+          transition-colors hover:bg-primary hover:text-white
+          focus-visible:outline-2 focus-visible:outline-primary"
+      >
+        ‹
+      </button>
+      <button
+        onClick={next}
+        aria-label="Next testimonial"
+        className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center
+          justify-center rounded-full bg-white shadow-md text-charcoal
+          transition-colors hover:bg-primary hover:text-white
+          focus-visible:outline-2 focus-visible:outline-primary"
+      >
+        ›
+      </button>
+
+      {/* Dot indicators */}
+      <div className="mt-6 flex justify-center gap-2" role="tablist" aria-label="Testimonial navigation">
+        {TESTIMONIALS.map((_, i) => (
+          <button
+            key={i}
+            role="tab"
+            aria-selected={i === current}
+            aria-label={`Go to testimonial ${i + 1}`}
+            onClick={() => setCurrent(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === current ? 'w-6 bg-primary' : 'w-2 bg-gray-300 hover:bg-gray-400'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
@@ -136,67 +218,8 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 export default function CirclesContent() {
   return (
     <>
-      {/* Start your Circle — 6 steps with circular images */}
-      <section className="py-24" aria-labelledby="start-circle-heading">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="mb-16 text-center">
-            <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-teal">
-              How it works
-            </p>
-            <h2
-              id="start-circle-heading"
-              className="font-display text-4xl font-bold tracking-tight text-charcoal md:text-5xl"
-            >
-              Start a Circle in 6 steps
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg font-light text-gray-600">
-              Anyone can lead a Circle — no expertise required, just the willingness
-              to create space for honest conversation.
-            </p>
-          </div>
-          <ol className="grid gap-5 sm:grid-cols-2" role="list">
-            {CIRCLE_STEPS.map((step, i) => (
-              <li key={step.title} className="flex items-center gap-5 rounded-2xl bg-gray-50 p-5">
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-4 ring-white">
-                  <Image
-                    src={step.image}
-                    alt=""
-                    fill
-                    sizes="80px"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="min-w-0">
-                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-gray-400">
-                    {i + 1}
-                  </span>
-                  <h3 className="mt-1 font-display text-base font-semibold text-charcoal">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-xs font-light leading-relaxed text-gray-600">
-                    {step.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-14 text-center">
-            <a
-              href="https://connect.leanin.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-full bg-primary px-8 py-3 text-sm font-bold text-white
-                transition-colors hover:bg-primary-hover
-                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            >
-              Start a Circle today
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Go further, faster — dark section with stats */}
-      <section className="bg-gray-900 py-24 text-white" aria-labelledby="go-further-heading">
+      <section className="py-24" style={{ backgroundColor: '#EDDDD4' }} aria-labelledby="go-further-heading">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
@@ -205,11 +228,11 @@ export default function CirclesContent() {
               </p>
               <h2
                 id="go-further-heading"
-                className="font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl"
+                className="font-display text-4xl font-bold leading-tight tracking-tight text-charcoal md:text-5xl"
               >
                 Go further, faster.
               </h2>
-              <p className="mt-6 text-lg font-light leading-relaxed text-white/70">
+              <p className="mt-6 text-lg font-light leading-relaxed text-charcoal/70">
                 You'll get access to proven leadership lessons and practical activities
                 designed to build your skills and confidence. Your Circle peers will offer
                 accountability and support every step of the way.
@@ -222,7 +245,7 @@ export default function CirclesContent() {
                   text-white transition-colors hover:bg-primary-hover
                   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                Start a Circle
+                Start Your Circle
               </a>
             </div>
             <ul className="grid grid-cols-2 gap-4" role="list">
@@ -232,9 +255,9 @@ export default function CirclesContent() {
                 { stat: '150K+', label: 'Circles active in 180+ countries worldwide' },
                 { stat: '8–12', label: 'members per Circle for meaningful connection' },
               ].map(({ stat, label }) => (
-                <li key={stat} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <li key={stat} className="rounded-2xl border border-charcoal/10 bg-white p-6">
                   <p className="font-display text-3xl font-bold text-primary">{stat}</p>
-                  <p className="mt-2 text-sm font-light leading-snug text-white/60">{label}</p>
+                  <p className="mt-2 text-sm font-light leading-snug text-charcoal/60">{label}</p>
                 </li>
               ))}
             </ul>
@@ -242,32 +265,21 @@ export default function CirclesContent() {
         </div>
       </section>
 
-      {/* Member testimonials */}
+      {/* Connect with other women — testimonial carousel */}
       <section className="py-24" aria-labelledby="testimonials-heading">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="mb-12 text-center">
             <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-teal">
-              Member stories
+              Circle members
             </p>
             <h2
               id="testimonials-heading"
               className="font-display text-4xl font-bold tracking-tight text-charcoal md:text-5xl"
             >
-              What Circle members say
+              Connect with other women
             </h2>
           </div>
-          <ul className="grid gap-6 sm:grid-cols-2" role="list">
-            {TESTIMONIALS.map(({ quote, location }) => (
-              <li key={location} className="flex flex-col rounded-2xl bg-gray-50 p-8">
-                <p className="flex-1 text-lg font-light leading-relaxed text-charcoal">
-                  &ldquo;{quote}&rdquo;
-                </p>
-                <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-teal">
-                  {location}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <TestimonialCarousel />
         </div>
       </section>
 
@@ -317,11 +329,23 @@ export default function CirclesContent() {
               <FAQItem key={faq.q} {...faq} />
             ))}
           </div>
+          <p className="mt-10 text-sm font-light text-gray-500">
+            Still have questions?{' '}
+            <a
+              href={`${LIVE}/circles/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-teal underline underline-offset-2 hover:text-primary"
+            >
+              Visit our full Circles guide
+            </a>{' '}
+            or reach out to the Lean In team.
+          </p>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="bg-primary py-24 text-center text-white">
+      <section className="py-24 text-center text-white" style={{ backgroundColor: '#772e25' }}>
         <div className="mx-auto max-w-3xl px-4 md:px-8">
           <h2 className="font-display text-4xl font-bold leading-tight md:text-5xl">
             Ready to find your people?
@@ -334,7 +358,7 @@ export default function CirclesContent() {
               href="https://connect.leanin.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-white px-8 py-3 text-sm font-bold text-primary
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-bold text-[#772e25]
                 transition-colors hover:bg-gray-100
                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
