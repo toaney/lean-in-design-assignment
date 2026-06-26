@@ -8,17 +8,17 @@ interface Props {
 
 export default function ResearchSection({ articles }: Props) {
   return (
-    <section aria-labelledby="research-heading" className="py-20">
+    <section aria-labelledby="research-heading" className="py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Header */}
-        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-teal">
               Latest insights
             </p>
             <h2
               id="research-heading"
-              className="font-display text-3xl font-bold text-secondary md:text-4xl"
+              className="font-display text-4xl font-bold tracking-tight text-charcoal md:text-5xl"
             >
               Research, news, and stories
             </h2>
@@ -34,12 +34,12 @@ export default function ResearchSection({ articles }: Props) {
 
         {/* Article grid */}
         <ul
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-2 gap-6"
           role="list"
         >
           {articles.slice(0, 6).map(article => (
             <li key={article.id}>
-              <article className="group h-full overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md">
+              <article className="group h-full overflow-hidden rounded-2xl bg-white shadow-sm transition-shadow hover:shadow-lg">
                 <a
                   href={article.url}
                   target="_blank"
@@ -51,7 +51,7 @@ export default function ResearchSection({ articles }: Props) {
                       src={article.image_url}
                       alt=""
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
@@ -61,7 +61,7 @@ export default function ResearchSection({ articles }: Props) {
                         {article.topics[0]}
                       </p>
                     )}
-                    <h3 className="font-display text-lg font-semibold leading-snug text-secondary
+                    <h3 className="font-display text-lg font-semibold leading-snug text-charcoal
                       group-hover:text-primary transition-colors">
                       {article.title}
                     </h3>

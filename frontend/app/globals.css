@@ -4,23 +4,24 @@
   /* ── Brand colors ─────────────────────────────────────────── */
   --color-primary: #b21f24;       /* lean-in-red    — CTAs, buttons, links     */
   --color-primary-hover: #780000; /* molten-lava    — hover/active for primary */
-  --color-secondary: #003049;     /* deep-space-blue — header, footer, cards   */
-  --color-background: #fdf0d5;    /* papaya-whip    — main content background  */
+  --color-secondary: #003049;     /* deep-space-blue — header, footer only     */
+  --color-background: #ffffff;    /* white          — main content background  */
   --color-molten-lava: #780000;
   --color-teal: #1f7a8c;
+  --color-charcoal: #222222;
 
-  /* ── Neutrals ─────────────────────────────────────────────── */
+  /* ── Neutrals (cool, clean — no warm undertone) ──────────── */
   --color-white: #ffffff;
-  --color-gray-50: #f9f8f6;
-  --color-gray-100: #f0ede8;
-  --color-gray-200: #e0dbd2;
-  --color-gray-400: #9e9688;
-  --color-gray-600: #6b6456;
-  --color-gray-900: #1a1613;
+  --color-gray-50: #f7f7f7;
+  --color-gray-100: #efefef;
+  --color-gray-200: #e5e5e5;
+  --color-gray-400: #9a9a9a;
+  --color-gray-600: #666666;
+  --color-gray-900: #111111;
 
   /* ── Typography ───────────────────────────────────────────── */
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-display: var(--font-inter), system-ui, -apple-system, sans-serif;
 
   /* ── Spacing / sizing tokens ──────────────────────────────── */
   --spacing-section: 5rem;
@@ -52,6 +53,15 @@ body {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ── Marquee animation ────────────────────────────────────────── */
+@keyframes marquee-y {
+  to { transform: translateY(-33.33%); }
+}
+
+.animate-marquee-y {
+  animation: marquee-y 22s linear infinite;
 }
 
 /* ── Skip nav ─────────────────────────────────────────────────── */

@@ -8,49 +8,49 @@ interface SlideData {
   id: string
   type: 'intro' | 'step' | 'cta'
   step?: CircleStep
-  bg: string
+  color: string  // hex value for background interpolation
   accent: string
+}
+
+// Hex colors — background interpolates between these, never jumps
+const COLORS = {
+  dark: '#111111',
+  red: '#b21f24',
+  crimson: '#780000',
 }
 
 function buildSlides(steps: CircleStep[]): SlideData[] {
   return [
-    {
-      id: 'intro',
-      type: 'intro',
-      bg: 'bg-secondary',
-      accent: 'text-teal',
-    },
-    ...steps.map(step => ({
+    { id: 'intro', type: 'intro', color: COLORS.dark, accent: 'text-teal' },
+    ...steps.map((step, i) => ({
       id: `step-${step.step}`,
       type: 'step' as const,
       step,
-      bg: step.step % 2 === 0 ? 'bg-secondary' : 'bg-molten-lava',
-      accent: 'text-white/60',
+      color: i % 2 === 0 ? COLORS.crimson : COLORS.red,
+      accent: 'text-white/40',
     })),
-    {
-      id: 'cta',
-      type: 'cta',
-      bg: 'bg-primary',
-      accent: 'text-white/70',
-    },
+    { id: 'cta', type: 'cta', color: COLORS.dark, accent: 'text-white/60' },
   ]
 }
 
-interface SlidePanelProps {
+interface ContentPanelProps {
   slide: SlideData
   scrollYProgress: MotionValue<number>
   index: number
   total: number
 }
 
-function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
-  const start = index / total
-  const end = (index + 1) / total
-  const mid = start + (end - start) * 0.3
-  const preMid = end - (end - start) * 0.3
+function ContentPanel({ slide, scrollYProgress, index, total }: ContentPanelProps) {
+  const slotSize = 1 / total
+  const start = index * slotSize
+  const end = (index + 1) * slotSize
+  const fadeW = slotSize * 0.22  // fade occupies 22% of each slot on each edge
 
-  const opacity = useTransform(scrollYProgress, [start, mid, preMid, end], [0, 1, 1, 0])
-  const y = useTransform(scrollYProgress, [start, mid, preMid, end], [50, 0, 0, -50])
+  const opacity = useTransform(
+    scrollYProgress,
+    [start, start + fadeW, end - fadeW, end],
+    [0, 1, 1, 0],
+  )
 
   return (
     <motion.div
@@ -62,13 +62,10 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
           ? 'Get started'
           : `Step ${slide.step?.step}: ${slide.step?.title}`
       }
-      className={`absolute inset-0 flex items-center justify-center px-6 ${slide.bg}`}
+      className="absolute inset-0 flex items-center justify-center px-6"
       style={{ opacity }}
     >
-      <motion.div
-        className="mx-auto max-w-2xl text-white"
-        style={{ y }}
-      >
+      <div className="mx-auto max-w-2xl text-white">
         {slide.type === 'intro' && (
           <>
             <p className={`mb-4 text-sm font-semibold uppercase tracking-widest ${slide.accent}`}>
@@ -77,7 +74,7 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
             <h2 className="font-display text-4xl font-bold leading-tight md:text-6xl">
               Six steps to your Circle
             </h2>
-            <p className="mt-6 max-w-lg text-lg font-light text-white/75">
+            <p className="mt-6 max-w-lg text-lg font-light text-white/70">
               Starting a Lean In Circle takes less than an hour. Here's exactly how.
             </p>
           </>
@@ -85,7 +82,7 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
 
         {slide.type === 'step' && slide.step && (
           <>
-            <p className={`mb-3 font-display text-8xl font-black leading-none ${slide.accent} md:text-[12rem]`}>
+            <p className={`mb-3 font-display text-8xl font-black leading-none ${slide.accent} md:text-[10rem]`}>
               {slide.step.step}
             </p>
             <h2 className="font-display text-3xl font-bold leading-tight md:text-5xl">
@@ -102,7 +99,7 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
             <h2 className="font-display text-4xl font-bold leading-tight md:text-6xl">
               Ready to start your Circle?
             </h2>
-            <p className="mx-auto mt-6 max-w-md text-lg font-light text-white/85">
+            <p className="mx-auto mt-6 max-w-md text-lg font-light text-white/70">
               Join 150,000+ Circles in 180 countries. It only takes a few minutes to begin.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -110,8 +107,8 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
                 href="https://leanin.org/circles/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded border-2 border-white px-8 py-3 text-sm font-bold text-white
-                  transition-colors hover:bg-white hover:text-primary
+                className="rounded-full border-2 border-white px-8 py-3 text-sm font-bold text-white
+                  transition-colors hover:bg-white hover:text-gray-900
                   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Get started on Lean In
@@ -119,7 +116,7 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
             </div>
           </div>
         )}
-      </motion.div>
+      </div>
 
       {/* Step progress dots */}
       {slide.type === 'step' && (
@@ -130,10 +127,10 @@ function SlidePanel({ slide, scrollYProgress, index, total }: SlidePanelProps) {
           {Array.from({ length: 6 }).map((_, i) => (
             <span
               key={i}
-              className={`block h-1.5 rounded-full transition-all duration-300 ${
+              className={`block h-1 rounded-full transition-all duration-500 ${
                 i < (slide.step?.step ?? 0)
                   ? 'w-6 bg-white'
-                  : 'w-1.5 bg-white/30'
+                  : 'w-1.5 bg-white/25'
               }`}
             />
           ))}
@@ -152,6 +149,11 @@ export default function ScrollExperience({ steps }: Props) {
   const { scrollYProgress } = useScroll({ target: containerRef })
   const slides = buildSlides(steps)
 
+  // Background color interpolates smoothly across all slide positions
+  const bgInputs = slides.map((_, i) => i / (slides.length - 1))
+  const bgValues = slides.map(s => s.color)
+  const backgroundColor = useTransform(scrollYProgress, bgInputs, bgValues)
+
   return (
     <>
       {/* Scroll-jacking container — desktop only */}
@@ -161,9 +163,13 @@ export default function ScrollExperience({ steps }: Props) {
         style={{ height: `${slides.length * 100}vh` }}
         aria-label="Circle creation steps — scroll to explore"
       >
-        <div className="sticky top-0 h-screen overflow-hidden" role="region">
+        <motion.div
+          className="sticky top-0 h-screen overflow-hidden"
+          style={{ backgroundColor }}
+          role="region"
+        >
           {slides.map((slide, i) => (
-            <SlidePanel
+            <ContentPanel
               key={slide.id}
               slide={slide}
               scrollYProgress={scrollYProgress}
@@ -171,27 +177,26 @@ export default function ScrollExperience({ steps }: Props) {
               total={slides.length}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Static layout — mobile */}
       <div className="md:hidden">
-        {/* Intro */}
-        <div className="bg-secondary px-6 py-16 text-white">
+        <div className="bg-gray-900 px-6 py-16 text-white">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-teal">
             How it works
           </p>
           <h2 className="font-display text-3xl font-bold">Six steps to your Circle</h2>
-          <p className="mt-4 text-base font-light text-white/75">
+          <p className="mt-4 text-base font-light text-white/70">
             Starting a Lean In Circle takes less than an hour.
           </p>
         </div>
 
-        {/* Steps */}
         {steps.map((step, i) => (
           <div
             key={step.step}
-            className={`px-6 py-12 text-white ${i % 2 === 0 ? 'bg-secondary' : 'bg-molten-lava'}`}
+            style={{ backgroundColor: i % 2 === 0 ? COLORS.crimson : COLORS.red }}
+            className="px-6 py-12 text-white"
           >
             <p className="font-display text-5xl font-black text-white/20">{step.step}</p>
             <h3 className="mt-2 font-display text-xl font-bold">{step.title}</h3>
@@ -201,15 +206,14 @@ export default function ScrollExperience({ steps }: Props) {
           </div>
         ))}
 
-        {/* CTA */}
-        <div className="bg-primary px-6 py-16 text-center text-white">
+        <div className="bg-gray-900 px-6 py-16 text-center text-white">
           <h2 className="font-display text-2xl font-bold">Ready to start your Circle?</h2>
           <a
             href="https://leanin.org/circles/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-block rounded border-2 border-white px-8 py-3 text-sm font-bold
-              text-white hover:bg-white hover:text-primary transition-colors"
+            className="mt-6 inline-block rounded-full border-2 border-white px-8 py-3 text-sm
+              font-bold text-white hover:bg-white hover:text-gray-900 transition-colors"
           >
             Get started on Lean In
           </a>

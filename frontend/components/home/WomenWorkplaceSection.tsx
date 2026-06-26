@@ -4,9 +4,9 @@ export default function WomenWorkplaceSection() {
   return (
     <section
       aria-labelledby="witw-heading"
-      className="bg-secondary text-white"
+      className="bg-gray-50"
     >
-      <div className="mx-auto max-w-7xl px-4 py-20 md:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-24 md:px-8 lg:py-28">
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           {/* Left */}
           <div>
@@ -15,11 +15,11 @@ export default function WomenWorkplaceSection() {
             </p>
             <h2
               id="witw-heading"
-              className="font-display text-3xl font-bold leading-tight md:text-4xl"
+              className="font-display text-4xl font-bold leading-tight tracking-tight text-charcoal md:text-5xl"
             >
               Women in the Workplace
             </h2>
-            <p className="mt-4 text-base font-light leading-relaxed text-white/75">
+            <p className="mt-4 text-base font-light leading-relaxed text-gray-600">
               For eleven years, Lean In and McKinsey have partnered to track the
               state of women in corporate America. The data is clear: progress is
               stalling. This report gives leaders the insights and tools to
@@ -29,9 +29,10 @@ export default function WomenWorkplaceSection() {
               href={`${LIVE}/report/women-in-the-workplace/`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-block rounded border border-white/30 px-6 py-3 text-sm font-semibold
-                text-white transition-colors hover:border-white/70 hover:bg-white/10
-                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="mt-8 inline-block rounded-full border border-gray-300 px-7 py-3
+                text-sm font-semibold text-charcoal transition-colors
+                hover:border-charcoal hover:bg-gray-100
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
             >
               Read the full report →
             </a>
@@ -67,10 +68,10 @@ export default function WomenWorkplaceSection() {
             ].map(({ stat, description }) => (
               <li
                 key={stat}
-                className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm"
+                className="rounded-2xl bg-white p-6 border border-gray-200"
               >
                 <p className="font-display text-2xl font-bold text-primary">{stat}</p>
-                <p className="mt-2 text-sm font-light leading-snug text-white/70">
+                <p className="mt-2 text-sm font-light leading-snug text-gray-600">
                   {description}
                 </p>
               </li>

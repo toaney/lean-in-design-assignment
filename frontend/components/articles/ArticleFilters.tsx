@@ -33,25 +33,22 @@ interface Props {
 }
 
 export default function ArticleFilters({ selectedTopics, selectedAudience, onChange }: Props) {
-  function toggleTopic(topic: string) {
+  function selectTopic(topic: string) {
     if (topic === 'All Topics') {
       onChange([], selectedAudience)
       return
     }
-    const next = selectedTopics.includes(topic)
-      ? selectedTopics.filter(t => t !== topic)
-      : [...selectedTopics, topic]
+    // Single-select: toggle off if already selected, otherwise select only this one
+    const next = selectedTopics[0] === topic ? [] : [topic]
     onChange(next, selectedAudience)
   }
 
-  function toggleAudience(label: string) {
+  function selectAudience(label: string) {
     if (label === 'For Everyone') {
       onChange(selectedTopics, [])
       return
     }
-    const next = selectedAudience.includes(label)
-      ? selectedAudience.filter(a => a !== label)
-      : [...selectedAudience, label]
+    const next = selectedAudience[0] === label ? [] : [label]
     onChange(selectedTopics, next)
   }
 
@@ -59,17 +56,16 @@ export default function ArticleFilters({ selectedTopics, selectedAudience, onCha
   const noAudienceFilter = selectedAudience.length === 0
 
   return (
-    <div className="border-b border-gray-200 bg-white shadow-sm">
-      <div className="mx-auto max-w-7xl px-4 py-4 md:px-8">
+    <div className="sticky top-12 z-40 border-b border-gray-200 bg-white shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 py-2 md:px-8">
         {/* Topics */}
-        <fieldset className="mb-3">
-          <legend className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-400">
-            Topics
-          </legend>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by topic">
+        <fieldset className="mb-1.5">
+          <legend className="mb-1 text-xs font-semibold uppercase tracking-widest text-gray-400">Topics</legend>
+          <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Filter by topic">
             <button
+              role="radio"
+              aria-checked={noTopicFilter}
               onClick={() => onChange([], selectedAudience)}
-              aria-pressed={noTopicFilter}
               className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors
                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
                 ${noTopicFilter
@@ -80,12 +76,13 @@ export default function ArticleFilters({ selectedTopics, selectedAudience, onCha
               All Topics
             </button>
             {TOPICS.slice(1).map(topic => {
-              const active = selectedTopics.includes(topic)
+              const active = selectedTopics[0] === topic
               return (
                 <button
                   key={topic}
-                  onClick={() => toggleTopic(topic)}
-                  aria-pressed={active}
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => selectTopic(topic)}
                   className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors
                     focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
                     ${active
@@ -102,13 +99,12 @@ export default function ArticleFilters({ selectedTopics, selectedAudience, onCha
 
         {/* Audience */}
         <fieldset>
-          <legend className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-400">
-            This is for
-          </legend>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by audience">
+          <legend className="mb-1 text-xs font-semibold uppercase tracking-widest text-gray-400">This is for</legend>
+          <div className="flex flex-wrap gap-1.5" role="radiogroup" aria-label="Filter by audience">
             <button
+              role="radio"
+              aria-checked={noAudienceFilter}
               onClick={() => onChange(selectedTopics, [])}
-              aria-pressed={noAudienceFilter}
               className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors
                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
                 ${noAudienceFilter
@@ -119,12 +115,13 @@ export default function ArticleFilters({ selectedTopics, selectedAudience, onCha
               For Everyone
             </button>
             {AUDIENCE.slice(1).map(label => {
-              const active = selectedAudience.includes(label)
+              const active = selectedAudience[0] === label
               return (
                 <button
                   key={label}
-                  onClick={() => toggleAudience(label)}
-                  aria-pressed={active}
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => selectAudience(label)}
                   className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors
                     focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
                     ${active

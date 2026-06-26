@@ -35,17 +35,17 @@ export default function PracticalAdviceSection() {
   return (
     <section
       aria-labelledby="practical-advice-heading"
-      className="bg-gray-50 py-20"
+      className="bg-gray-50 py-24"
     >
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         {/* Header */}
-        <div className="mb-10">
+        <div className="mb-12">
           <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-teal">
             Guides & tools
           </p>
           <h2
             id="practical-advice-heading"
-            className="font-display text-3xl font-bold text-secondary md:text-4xl"
+            className="font-display text-4xl font-bold tracking-tight text-charcoal md:text-5xl"
           >
             Practical advice for work and life
           </h2>
@@ -59,15 +59,15 @@ export default function PracticalAdviceSection() {
                 href={guide.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex h-full flex-col rounded-xl bg-white p-6 transition-shadow
-                  hover:shadow-md border border-gray-100 focus-visible:outline-2
+                className="group flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm
+                  transition-shadow hover:shadow-lg focus-visible:outline-2
                   focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                <span className="mb-3 inline-block rounded-full bg-secondary/10 px-3 py-1
-                  text-xs font-semibold text-secondary">
+                <span className="mb-3 inline-block rounded-full bg-gray-100 px-3 py-1
+                  text-xs font-semibold text-gray-600">
                   {guide.tag}
                 </span>
-                <h3 className="font-display text-base font-semibold leading-snug text-secondary
+                <h3 className="font-display text-base font-semibold leading-snug text-charcoal
                   group-hover:text-primary transition-colors">
                   {guide.title}
                 </h3>

@@ -7,7 +7,10 @@ interface MasonicRenderProps {
   width: number
 }
 
-export default function ArticleCard({ data: article }: MasonicRenderProps) {
+const IMAGE_RATIOS = ['16/9', '1/1', '3/4', '4/3', '2/3', '16/9', '1/1', '4/3']
+
+export default function ArticleCard({ data: article, index }: MasonicRenderProps) {
+  const ratio = IMAGE_RATIOS[index % IMAGE_RATIOS.length]
   return (
     <article className="group overflow-hidden rounded-xl border border-gray-200 bg-white
       transition-shadow hover:shadow-md">
@@ -18,7 +21,7 @@ export default function ArticleCard({ data: article }: MasonicRenderProps) {
         aria-label={`Read article: ${article.title}`}
       >
         {/* Thumbnail */}
-        <div className="relative w-full overflow-hidden bg-gray-100" style={{ aspectRatio: '16/9' }}>
+        <div className="relative w-full overflow-hidden bg-gray-100" style={{ aspectRatio: ratio }}>
           <Image
             src={article.image_url}
             alt=""
@@ -38,7 +41,7 @@ export default function ArticleCard({ data: article }: MasonicRenderProps) {
           )}
 
           {/* Title */}
-          <h2 className="font-display text-sm font-semibold leading-snug text-secondary
+          <h2 className="font-display text-sm font-semibold leading-snug text-charcoal
             group-hover:text-primary transition-colors sm:text-base">
             {article.title}
           </h2>
@@ -54,7 +57,7 @@ export default function ArticleCard({ data: article }: MasonicRenderProps) {
               {article.audience.slice(0, 2).map(tag => (
                 <span
                   key={tag}
-                  className="rounded-full bg-secondary/8 px-2 py-0.5 text-xs font-light text-secondary"
+                  className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-light text-gray-600"
                 >
                   {tag}
                 </span>
