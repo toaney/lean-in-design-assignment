@@ -29,12 +29,16 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: react_frontend
+    container_name: nextjs_frontend
     volumes:
       - ./frontend:/app
       - /app/node_modules
+      - /app/.next
     ports:
-      - "5173:5173"
+      - "3000:3000"
+    environment:
+      - API_URL=http://backend:8000
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
     depends_on:
       - backend
     networks:
