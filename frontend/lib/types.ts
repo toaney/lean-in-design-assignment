@@ -6,7 +6,7 @@ export interface Article {
   image_url: string
   topics: string[]
   audience: string[]
-  author?: string
+  author?: string | null
   published_date: string
   url: string
 }

@@ -13,8 +13,6 @@ const Masonry = dynamic<MasonryProps<Article>>(
   { ssr: false }
 )
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-
 interface Props {
   initialArticles: Article[]
   initialHasMore: boolean
@@ -27,7 +25,7 @@ async function getArticles(page: number, topics: string[], audience: string[]) {
   const filteredAudience = audience.filter(a => a !== 'For Everyone')
   if (filteredTopics.length) params.set('topics', filteredTopics.join(','))
   if (filteredAudience.length) params.set('audience', filteredAudience.join(','))
-  const res = await fetch(`${API_URL}/api/articles?${params}`)
+  const res = await fetch(`/api/articles?${params}`)
   if (!res.ok) throw new Error('Failed to fetch articles')
   return res.json()
 }
