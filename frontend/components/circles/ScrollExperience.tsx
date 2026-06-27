@@ -230,7 +230,7 @@ export default function ScrollExperience({ steps }: Props) {
         style={{ height: `${slides.length * 100}vh` }}
         aria-label="Circle creation steps — scroll to explore"
       >
-        <div className="sticky top-0 h-screen overflow-hidden bg-white">
+        <div className="sticky top-[80px] h-[calc(100vh-80px)] overflow-hidden bg-white">
           <div className="grid h-full" style={{ gridTemplateColumns: '1fr 1fr 56px' }}>
 
             {/* Left: image layers */}
