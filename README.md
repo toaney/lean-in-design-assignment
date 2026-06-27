@@ -62,12 +62,10 @@ Three Docker services share an internal `app-network`: a PostgreSQL 16 database,
 
 Tech Stack explanation: 
 
-Frontend Stack: Next.js, TypeScript, Tailwind CSS; additional dependencies Framer Motion, D3, Masonic
-Backend Stack: FastAPI, Uvicorn
+Stack: Next.js, TypeScript, Tailwind CSS; additional dependencies Framer Motion, D3, Masonic
+
 
 This stack was chosen to quickly spin up a working frontend environment. The biggest frontend decision was whether or not to introduce Next.js in this small assignment. Next.js was ultimately chosen for its image optimization. The Lean In site is very data and image heavy. Next.js’s image optimization alone was worth its introduction to the project. With Next.js further optimizations such as the use of server side rendering and even hybrid rendering could take place. This would further improve web metrics but also greatly enhance the overall site’s SEO. 
-
-FastAPI and Uvicorn were used to quickly mock apis used by the project. While these apis could have been handled inside Next.js itself, bringing in this tech better emulates the stack used in production 
 
 
 Design choice explanation: 
