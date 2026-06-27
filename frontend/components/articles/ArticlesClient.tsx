@@ -2,12 +2,16 @@
 
 import { useState, useCallback, useRef } from 'react'
 import dynamic from 'next/dynamic'
-import ArticleCard from './ArticleCard'
-
-const Masonry = dynamic(() => import('masonic').then(m => m.Masonry), { ssr: false })
+import type { MasonryProps } from 'masonic'
 import ArticleFilters from './ArticleFilters'
+import ArticleCard from './ArticleCard'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import type { Article } from '@/lib/types'
+
+const Masonry = dynamic<MasonryProps<Article>>(
+  () => import('masonic').then(m => m.Masonry),
+  { ssr: false }
+)
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -107,7 +111,7 @@ export default function ArticlesClient({ initialArticles, initialHasMore, initia
             columnWidth={280}
             columnGutter={16}
             rowGutter={16}
-            itemKey={(item: any) => item?.id}
+            itemKey={(item) => item.id}
             overscanBy={2}
           />
         )}
