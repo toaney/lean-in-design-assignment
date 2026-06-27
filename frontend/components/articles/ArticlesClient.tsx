@@ -2,14 +2,16 @@
 
 import { useState, useCallback, useRef } from 'react'
 import dynamic from 'next/dynamic'
-import ArticleCard from './ArticleCard'
-
-const Masonry = dynamic(() => import('masonic').then(m => m.Masonry), { ssr: false })
+import type { MasonryProps } from 'masonic'
 import ArticleFilters from './ArticleFilters'
+import ArticleCard from './ArticleCard'
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver'
 import type { Article } from '@/lib/types'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const Masonry = dynamic<MasonryProps<Article>>(
+  () => import('masonic').then(m => m.Masonry),
+  { ssr: false }
+)
 
 interface Props {
   initialArticles: Article[]
@@ -23,7 +25,7 @@ async function getArticles(page: number, topics: string[], audience: string[]) {
   const filteredAudience = audience.filter(a => a !== 'For Everyone')
   if (filteredTopics.length) params.set('topics', filteredTopics.join(','))
   if (filteredAudience.length) params.set('audience', filteredAudience.join(','))
-  const res = await fetch(`${API_URL}/api/articles?${params}`)
+  const res = await fetch(`/api/articles?${params}`)
   if (!res.ok) throw new Error('Failed to fetch articles')
   return res.json()
 }
@@ -107,7 +109,7 @@ export default function ArticlesClient({ initialArticles, initialHasMore, initia
             columnWidth={280}
             columnGutter={16}
             rowGutter={16}
-            itemKey={(item: any) => item?.id}
+            itemKey={(item) => item.id}
             overscanBy={2}
           />
         )}
