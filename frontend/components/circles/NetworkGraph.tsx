@@ -83,10 +83,14 @@ export default function NetworkGraph({ className }: { className?: string }) {
         }
       })
 
-      edges = []
+      // Shuffle indices and build a spanning chain so every node has at least one connection
+      const order = nodes.map((_, i) => i).sort(() => Math.random() - 0.5)
+      edges = order.map((n, i) => [n, order[(i + 1) % order.length]] as [number, number])
+
+      // Add 1–2 extra random edges per node for a denser, less linear look
       nodes.forEach((_, i) => {
-        const count = 2 + Math.floor(Math.random() * 2)
-        for (let k = 0; k < count; k++) {
+        const extra = 1 + Math.floor(Math.random() * 2)
+        for (let k = 0; k < extra; k++) {
           const j = Math.floor(Math.random() * nodes.length)
           if (j !== i) edges.push([i, j])
         }
@@ -99,7 +103,7 @@ export default function NetworkGraph({ className }: { className?: string }) {
       edges.forEach(([i, j]) => {
         const a = nodes[i], b = nodes[j]
         const dist = Math.hypot(b.x - a.x, b.y - a.y)
-        const alpha = Math.max(0, (1 - dist / 420)) * 0.16
+        const alpha = Math.max(0, (1 - dist / 420)) * 0.45
         if (alpha <= 0) return
         ctx!.beginPath()
         ctx!.moveTo(a.x, a.y)
